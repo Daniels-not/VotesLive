@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+<!--- inhering from base.html to get all bootstrap styles --->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center md-3 mt-3">Votes Live</h1>
+    {% if latest_question_list %}
+        {% for questions in latest_question_list %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="lead">{{ questions.question_text }}</p>
+                <a href="{% url 'voteLive:choice' questions.id %}" class="btn btn-primary"><i class="far fa-thumbs-up"></i> Vote Now</a>
+                <a href="{% url 'voteLive:results' questions.id %}" class="btn btn-secondary"><i class="fas fa-poll"></i> Results</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+    {% endif %}
+{% endblock %}
+</body>
+</html>

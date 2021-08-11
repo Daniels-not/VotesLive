@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center mb-5">{{ question.question_text }}</h1>
+    <ul class="list-group mb-5">
+        {% for choice in question.choices_set.all %}
+        <li class="list-group-item">
+            {{ choice.choice_text }} <span class="badge bg-success float-end">{{ choice.votes }} votes{{ choice.votes | pluralize }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'voteLive:index' %}" class="btn btn-secondary"><i class="fas fa-backward"></i> Go Back</a>
+    <a class="btn btn-dark" href="{% url 'voteLive:choice' question.id %}"><i class="far fa-thumbs-up"></i> Vote again?</a>
+{% endblock %}
+</body>
+</html>

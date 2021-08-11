@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choices</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'voteLive:index' %}" class="btn btn-secondary btn-sm mb-3 mt-3"><i class="fas fa-backward"></i> Go Back</a>
+    <h2 class="text-center mb-3">{{ question.question_text }}</h2>
+
+    {% if error_message %}
+        <p class="alert alert-danger">
+            <strong>{{ error_message }}</strong>
+        </p>
+    {% endif %}
+
+    <form action="{% url 'voteLive:vote' question.id %}" method="post">
+        {% csrf_token %}
+        {% for choices in question.choices_set.all %}
+            <div class="form-check mb-3">
+                <input type="radio" name="choice" value="{{ choices.id }}" class="form-check-input mb-2" id="choices{{ forloop.counter }}">
+                <label for="choices{{ forloop.counter }}">{{ choices.choice_text }}</label>
+            </div>
+        {% endfor %}
+        <input type="submit" value="Votes" class="btn btn-success btn-lg btn-block">
+    </form>
+{% endblock %}
+</body>
+</html>
